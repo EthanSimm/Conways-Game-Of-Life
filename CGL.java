@@ -14,13 +14,19 @@ public class CGL {
         rows = grid[0].length;
         cols = grid.length;
     }
-
     // Constructor w/ a preset generation
     public CGL(int[][] g){
         grid = g;
         rows = grid[0].length;
         cols = grid.length;
     }
+    // Constructor w/ a random generation
+    public CGL(int rows, int cols){
+        grid = randFirstGen(rows, cols);
+        this.rows = grid[0].length;
+        this.cols = grid.length;
+    }
+
 
     // Getters and setters //
     public int[][] getGrid() {return grid;}
@@ -33,6 +39,22 @@ public class CGL {
     public void setCols(int c) {cols = c;}
 
     // Methods //
+    // Creating a random first generation
+    private int[][] randFirstGen(int rows, int cols){
+        int[][] temp = new int[rows][cols];
+
+        // Determining whether each cell will be alive or dead
+        for (int i = 0; i < temp[0].length; i++){
+            for (int j = 0; j < temp.length; j++){
+                // 25% chance that the cell will be alive
+                if (Math.random() * 4 > 2){
+                    temp[i][j] = 1;
+                }
+            }
+        }
+        return temp;
+    }
+
     // Simulating the next generation
     public void nextGen(){
         int[][] temp = new int[rows][cols];
@@ -80,7 +102,12 @@ public class CGL {
         String temp = "Generation " + gen + "\n";
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
-                temp += grid[i][j] + "  ";
+                if (grid[i][j] == 1)
+                {
+                    temp += grid[i][j] + "  ";
+                } else {
+                    temp += "   ";
+                }
             }
             temp += "\n";
         }
